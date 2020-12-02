@@ -21,7 +21,7 @@ def on_message(client, userdata, msg):  # The callback for when a PUBLISH messag
     data_in = json.loads(msg.payload.decode('utf-8'))
     user_dao = UsuarioDao(connection.db)
     user_fk = user_dao.busca_id_usuario(data_in['usuario'])
-    novo_bot.set_fk_user(user_fk)
+    # novo_bot.set_fk_user(user_fk)
     novo_sensor = Sensor(data_in['nome_sensor'], data_in['temperatura'], data_in['umidade'], time.strftime('%Y-%m-%d'),
                          time.strftime('%H:%M:%S'), user_fk)
     try:
