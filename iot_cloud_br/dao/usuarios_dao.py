@@ -12,6 +12,12 @@ class UsuarioDao():
         cursor.execute(SQL_INSERT_USUARIO, (valor1, valor2))
         self.db.commit()
 
+    def select_usuarios(self):
+        cursor = self.db.cursor()
+        cursor.execute(SQL_SELECT_USERS)
+        resultado = cursor.fetchall()
+        return dict(resultado)
+
     def select_users(self, usuario, senha):
         cursor = self.db.cursor()
         cursor.execute(SQL_SELECT_USERS)
