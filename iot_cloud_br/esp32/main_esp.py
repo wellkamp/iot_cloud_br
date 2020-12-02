@@ -15,20 +15,20 @@ def main():
         valores = {
             "temperatura": valor_temperatura,
             "umidade": valor_umidade,
-            "nome_sensor": "nome_do_sensor",
-            "usuario": "usuario_fornecido_pelo_bot"
+            "nome_sensor": "dht11",
+            "usuario": "wellington_1118650110"
         }
         file_json = json.dumps(valores)
         return file_json
 
-    cn.connect('ssid', 'senha')
+    cn.connect('SSID', 'SENHA')
     sensor = dht.DHT11(Pin(12))
-    c_mqtt = MQTTClient('nome_do_cliente', 'BROKER', port=1883)
+    c_mqtt = MQTTClient('esp32_well', 'test.mosquitto.org', port=1883)
     c_mqtt.connect()
 
     while True:
         try:
-            c_mqtt.publish(topic='nome_do_topico', msg=valores_dht11())
+            c_mqtt.publish(topic='iot_cloud_br/8650110', msg=valores_dht11())
             print("mensagem enviada com sucesso")
         except Exception as e:
             print(e)
