@@ -1,7 +1,7 @@
 class User():
-    def __init__(self):
-        self._user = ''
-        self._pwd = ''
+    def __init__(self, login, senha):
+        self._user = login
+        self._pwd = senha
 
     @property
     def user(self):
