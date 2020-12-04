@@ -1,5 +1,5 @@
 SQL_SELECT_USERS = 'SELECT login, senha FROM USUARIOS'
-SQL_INSERT_USUARIO = 'INSERT into usuarios(login, senha) values(%s, %s)'
+SQL_INSERT_USER = 'INSERT into usuarios(login, senha) values(%s, %s)'
 SQL_SELECT = 'SELET * FROM '
 
 
@@ -7,30 +7,30 @@ class UsuarioDao():
     def __init__(self, db):
         self.db = db
 
-    def insert_usuario(self, valor1, valor2):
+    def insert_user(self, login, pwd):
         cursor = self.db.cursor()
-        cursor.execute(SQL_INSERT_USUARIO, (valor1, valor2))
+        cursor.execute(SQL_INSERT_USER, (login, pwd))
         self.db.commit()
 
     def select_usuarios(self):
         cursor = self.db.cursor()
         cursor.execute(SQL_SELECT_USERS)
-        resultado = cursor.fetchall()
-        return dict(resultado)
+        result = cursor.fetchall()
+        return dict(result)
 
-    def select_users(self, usuario, senha):
+    def select_users(self, user, pwd):
         cursor = self.db.cursor()
         cursor.execute(SQL_SELECT_USERS)
-        resultado = cursor.fetchall()
-        dict(resultado)
-        for chave, valor in self.select_usuarios().items():
-            if chave == usuario and valor == senha:
+        result = cursor.fetchall()
+        dict(result)
+        for key, value in self.select_usuarios().items():
+            if key == user and value == pwd:
                 return True
         return False
 
-    def busca_id_usuario(self, usuario):
+    def search_id_user(self, user):
         cursor = self.db.cursor()
-        cursor.execute("SELECT id_users FROM usuarios WHERE login = '" + usuario + "'")
-        resultado = cursor.fetchall()
-        for resultados in resultado:
-            return resultados[0]
+        cursor.execute("SELECT id_users FROM usuarios WHERE login = '" + user + "'")
+        result = cursor.fetchall()
+        for results in result:
+            return results[0]
