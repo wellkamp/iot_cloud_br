@@ -21,7 +21,7 @@ def main():
         file_json = json.dumps(valores)
         return file_json
 
-    cn.connect('SSID', 'SENHA')
+    cn.connect('WELLSUH 2G', '01530134')
     sensor = dht.DHT11(Pin(12))
     c_mqtt = MQTTClient('esp32_well', 'test.mosquitto.org', port=1883)
     c_mqtt.connect()
