@@ -12,18 +12,12 @@ class UsuarioDao():
         cursor.execute(SQL_INSERT_USER, (login, pwd))
         self.db.commit()
 
-    def select_usuarios(self):
-        cursor = self.db.cursor()
-        cursor.execute(SQL_SELECT_USERS)
-        result = cursor.fetchall()
-        return dict(result)
-
     def select_users(self, user, pwd):
         cursor = self.db.cursor()
         cursor.execute(SQL_SELECT_USERS)
         result = cursor.fetchall()
-        dict(result)
-        for key, value in self.select_usuarios().items():
+        result = dict(result)
+        for key, value in result.items():
             if key == user and value == pwd:
                 return True
         return False

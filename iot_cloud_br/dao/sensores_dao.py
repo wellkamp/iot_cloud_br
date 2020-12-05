@@ -48,35 +48,35 @@ class SensorsDao():
         cursor.execute(SQL_INSERT_SENSOR, (sensor_name, temperature, humidity, date_column, hour_column, fk_user))
         self.db.commit()
 
-    def select_temperature_ten_rows(self, fk_user, sensor_name):
+    def select_temperature_eight_rows(self, fk_user, sensor_name):
         temperature = []
         cursor = self.db.cursor()
         cursor.execute('SELECT temperature FROM user_sensors WHERE fk_users = ' + str(
-            fk_user) + ' and sensor_name = "' + sensor_name + '" ORDER BY date_column, hour_column ASC LIMIT 8')
+            fk_user) + ' and sensor_name = "' + sensor_name + '" ORDER BY id DESC LIMIT 8')
         result = cursor.fetchall()
         for results in result:
             temperature.append(int(results[0]))
-        return temperature
+        return temperature[::-1]
 
-    def select_hour_ten_rows(self, fk_user, sensor_name):
+    def select_hour_eight_rows(self, fk_user, sensor_name):
         hour = []
         cursor = self.db.cursor()
         cursor.execute('SELECT hour_column FROM user_sensors WHERE fk_users = ' + str(
-            fk_user) + ' and sensor_name = "' + sensor_name + '" ORDER BY date_column, hour_column DESC LIMIT 8')
+            fk_user) + ' and sensor_name = "' + sensor_name + '" ORDER BY id DESC LIMIT 8')
         result = cursor.fetchall()
         for results in result:
             hour.append(results[0])
-        return hour
+        return hour[::-1]
 
-    def select_humidity_ten_rows(self, fk_user, sensor_name):
+    def select_humidity_eight_rows(self, fk_user, sensor_name):
         humidity = []
         cursor = self.db.cursor()
         cursor.execute('SELECT humidity FROM user_sensors WHERE fk_users = ' + str(
-            fk_user) + ' and sensor_name = "' + sensor_name + '" ORDER BY date_column, hour_column DESC LIMIT 8')
+            fk_user) + ' and sensor_name = "' + sensor_name + '" ORDER BY id DESC LIMIT 8')
         result = cursor.fetchall()
         for results in result:
             humidity.append(int(results[0]))
-        return humidity
+        return humidity[::-1]
 
     def delete_sensor(self, sensor_name, fk_user):
         cursor = self.db.cursor()

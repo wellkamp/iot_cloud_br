@@ -22,6 +22,7 @@ def main():
     def on_message(client, userdata, msg):  # The callback for when a PUBLISH message is received from the server.
         print("Message received-> " + msg.topic + " " + str(msg.payload))  # Print a received msg
         data_in = json.loads(msg.payload.decode('utf-8'))
+        print(type(data_in))
         try:
             user_fk = user_dao.search_id_user(data_in['usuario'])
             novo_sensor = Sensor(data_in['nome_sensor'], data_in['temperatura'], data_in['umidade'],
@@ -34,7 +35,7 @@ def main():
             print(e)
 
     # BOT
-    novo_bot = TelegramBot('1475705510:AAEW3BEzu3fCNH-13Jr4tMhsaPZgOrAX8_o')
+    novo_bot = TelegramBot('1310318843:AAF8BnH-YqmHhNxlsg4Afy-_egm-DMyNMK8')
     MessageLoop(novo_bot.bot, novo_bot.handle).run_as_thread()
 
     # MQTT
