@@ -8,9 +8,9 @@ import conexao as cn
 
 
 def main():
-    cn.connect('WELLSUH 2G', '01530134')
+    cn.connect('SSID', 'SENHA')
     sensor = dht.DHT11(Pin(12))
-    c_mqtt = MQTTClient('esp32_well', 'test.mosquitto.org', port=1883)
+    c_mqtt = MQTTClient('CLIENTE_MQTT', 'test.mosquitto.org', port=1883)
     c_mqtt.connect()
 
     def valores_dht11():
@@ -18,8 +18,8 @@ def main():
         valores = {
             "temperatura": sensor.temperature(),
             "umidade": sensor.humidity(),
-            "nome_sensor": "dht11",
-            "usuario": "wellington_1118650110"
+            "nome_sensor": "nome_do_sensor",
+            "usuario": "usuario_enviado_pelo_telegram"
         }
         file_json = json.dumps(valores)
         return file_json

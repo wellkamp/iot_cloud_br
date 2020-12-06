@@ -2,9 +2,9 @@ import mysql.connector
 
 db = mysql.connector.connect(
     host="localhost",
-    user="wellkamp",
+    user="USUARIO",
     port = 3306,
-    password="wellk4mp",
+    password="SENHA",
     auth_plugin='mysql_native_password',
     database='iot_cloud_br'
 )
