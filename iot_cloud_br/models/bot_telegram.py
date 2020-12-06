@@ -81,7 +81,7 @@ class TelegramBot():
             humidity = sensor_dao.select_humidity(user_fk, sensor_name)
             date = sensor_dao.select_date(user_fk, sensor_name)
             hour = sensor_dao.select_hour(user_fk, sensor_name)
-            if temperature is not None:
+            if temperature is not None and sensor_name != '':
                 temperature = f'Temperatura: {temperature} C'
                 humidity = f'Umidade: {humidity} %'
                 date = f'Data: {date: %d/%m/%Y}'
@@ -91,7 +91,7 @@ class TelegramBot():
                 self.bot.sendMessage(self.chat_id, date)
                 self.bot.sendMessage(self.chat_id, hour)
             elif temperature != 'None':
-                self.bot.sendMessage(self.chat_id, 'Não há registro de valores ainda')
+                self.bot.sendMessage(self.chat_id, 'Verificar o nome do sensor ou esperar um dado ser inserido!!')
         except Exception as e:
             print(e)
             self.bot.sendMessage(self.chat_id, 'Deve esperar um valor ser inserido!')
@@ -120,10 +120,10 @@ class TelegramBot():
             user_fk = user_dao.search_id_user(user.user)
             temperature = sensor_dao.select_temperature_eight_rows(user_fk, sensor_name)
             hour = sensor_dao.select_hour_eight_rows(user_fk, sensor_name)
-            if temperature is not None:
+            if temperature is not None and sensor_name != '':
                 self.plot_temperature(hour, temperature, user_fk)
             elif temperature != 'None':
-                self.bot.sendMessage(self.chat_id, 'Não há registro de valores ainda!')
+                self.bot.sendMessage(self.chat_id, 'Verificar o nome do sensor ou esperar um dado ser inserido!!')
         except Exception as e:
             print(e)
             self.bot.sendMessage(self.chat_id, 'Deve esperar um valor ser inserido!')
@@ -134,10 +134,10 @@ class TelegramBot():
             user_fk = user_dao.search_id_user(user.user)
             humidity = sensor_dao.select_humidity_eight_rows(user_fk, sensor_name)
             hour = sensor_dao.select_hour_eight_rows(user_fk, sensor_name)
-            if humidity is not None:
+            if humidity is not None and sensor_name != '':
                 self.plot_humidity(hour, humidity, user_fk)
             elif humidity != 'None':
-                self.bot.sendMessage(self.chat_id, 'Não há registro de valores ainda!')
+                self.bot.sendMessage(self.chat_id, 'Verificar o nome do sensor ou esperar um dado ser inserido!!')
         except Exception as e:
             print(e)
             self.bot.sendMessage(self.chat_id, 'Deve esperar um valor ser inserido!')
@@ -226,12 +226,14 @@ class TelegramBot():
                 sensor_name = msg['text'][9:]
                 print(sensor_name)
                 self.delete_sensor(sensor_name, new_user)
-            if msg['text'] == '/identify':
+            elif msg['text'] == '/identify':
                 login = str(msg['from']['first_name'] + '_' + str(msg['from']['id'])).lower()
                 senha = str(msg['from']['id'])[4:]
                 new_user.user = login
                 new_user.pwd = senha
                 self.identify_user(new_user)
+            else:
+                self.bot.sendMessage(self.chat_id, 'Você não digitou um comando válido :(')
 
 
 user_dao = UsuarioDao(connection.db)

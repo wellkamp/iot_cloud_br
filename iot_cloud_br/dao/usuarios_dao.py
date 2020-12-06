@@ -1,6 +1,5 @@
 SQL_SELECT_USERS = 'SELECT login, senha FROM USUARIOS'
 SQL_INSERT_USER = 'INSERT into usuarios(login, senha) values(%s, %s)'
-SQL_SELECT = 'SELET * FROM '
 
 
 class UsuarioDao():

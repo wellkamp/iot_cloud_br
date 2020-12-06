@@ -8,23 +8,21 @@ import conexao as cn
 
 
 def main():
+    cn.connect('WELLSUH 2G', '01530134')
+    sensor = dht.DHT11(Pin(12))
+    c_mqtt = MQTTClient('esp32_well', 'test.mosquitto.org', port=1883)
+    c_mqtt.connect()
+
     def valores_dht11():
         sensor.measure()
-        valor_temperatura = sensor.temperature()
-        valor_umidade = sensor.humidity()
         valores = {
-            "temperatura": valor_temperatura,
-            "umidade": valor_umidade,
+            "temperatura": sensor.temperature(),
+            "umidade": sensor.humidity(),
             "nome_sensor": "dht11",
             "usuario": "wellington_1118650110"
         }
         file_json = json.dumps(valores)
         return file_json
-
-    cn.connect('WELLSUH 2G', '01530134')
-    sensor = dht.DHT11(Pin(12))
-    c_mqtt = MQTTClient('esp32_well', 'test.mosquitto.org', port=1883)
-    c_mqtt.connect()
 
     while True:
         try:
@@ -37,6 +35,8 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
 
 
 

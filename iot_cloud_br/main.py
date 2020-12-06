@@ -22,7 +22,6 @@ def main():
     def on_message(client, userdata, msg):  # The callback for when a PUBLISH message is received from the server.
         print("Message received-> " + msg.topic + " " + str(msg.payload))  # Print a received msg
         data_in = json.loads(msg.payload.decode('utf-8'))
-        print(type(data_in))
         try:
             user_fk = user_dao.search_id_user(data_in['usuario'])
             novo_sensor = Sensor(data_in['nome_sensor'], data_in['temperatura'], data_in['umidade'],

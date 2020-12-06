@@ -1,4 +1,5 @@
-SQL_INSERT_SENSOR = 'INSERT into user_sensors (sensor_name, temperature, humidity, date_column, hour_column, fk_users) ' \
+SQL_INSERT_SENSOR = 'INSERT into user_sensors ' \
+                    '(sensor_name, temperature, humidity, date_column, hour_column, fk_users) ' \
                     'values (%s, %s, %s, %s, %s, %s)'
 
 
@@ -6,39 +7,34 @@ class SensorsDao():
     def __init__(self, db):
         self.db = db
 
-    def select_sensors(self, tabela):
-        cursor = self.db.cursor()
-        cursor.execute('SELECT temperatura, umidade FROM user_sensors ORDER BY id DESC limit 1')
-        result = cursor.fetchall()
-        for results in result:
-            str = 'Temperatura: ' + results[0]
-            str1 = '\nUmidade: ' + results[1]
-            return str + str1
-
     def select_temperature(self, fk_user, sensor_name):
         cursor = self.db.cursor()
-        cursor.execute('SELECT temperature FROM user_sensors WHERE fk_users = '+str(fk_user)+' and sensor_name = "'+sensor_name+'" ORDER BY id DESC limit 1')
+        cursor.execute('SELECT temperature FROM user_sensors WHERE fk_users = '
+                       ''+str(fk_user)+' and sensor_name = "'+sensor_name+'" ORDER BY id DESC limit 1')
         result = cursor.fetchall()
         for results in result:
             return results[0]
 
     def select_humidity(self, fk_user, sensor_name):
         cursor = self.db.cursor()
-        cursor.execute('SELECT humidity FROM user_sensors WHERE fk_users = '+str(fk_user)+' and sensor_name = "'+sensor_name+'" ORDER BY id DESC limit 1')
+        cursor.execute('SELECT humidity FROM user_sensors WHERE fk_users = '
+                       ''+str(fk_user)+' and sensor_name = "'+sensor_name+'" ORDER BY id DESC limit 1')
         result = cursor.fetchall()
         for results in result:
             return results[0]
 
     def select_date(self, fk_user, sensor_name):
         cursor = self.db.cursor()
-        cursor.execute('SELECT date_column FROM user_sensors WHERE fk_users = '+str(fk_user)+' and sensor_name = "'+sensor_name+'" ORDER BY id DESC limit 1')
+        cursor.execute('SELECT date_column FROM user_sensors WHERE fk_users = '
+                       ''+str(fk_user)+' and sensor_name = "'+sensor_name+'" ORDER BY id DESC limit 1')
         result = cursor.fetchall()
         for results in result:
             return results[0]
 
     def select_hour(self, fk_user, sensor_name):
         cursor = self.db.cursor()
-        cursor.execute('SELECT hour_column FROM user_sensors WHERE fk_users = '+str(fk_user)+' and sensor_name = "'+sensor_name+'" ORDER BY id DESC limit 1')
+        cursor.execute('SELECT hour_column FROM user_sensors WHERE fk_users = '
+                       ''+str(fk_user)+' and sensor_name = "'+sensor_name+'" ORDER BY id DESC limit 1')
         result = cursor.fetchall()
         for results in result:
             return results[0]
@@ -80,7 +76,8 @@ class SensorsDao():
 
     def delete_sensor(self, sensor_name, fk_user):
         cursor = self.db.cursor()
-        cursor.execute('DELETE FROM user_sensors WHERE sensor_name = "' + sensor_name + '" and fk_users = '+str(fk_user)+'')
+        cursor.execute('DELETE FROM user_sensors WHERE sensor_name = '
+                       '"' + sensor_name + '" and fk_users = '+str(fk_user)+'')
         self.db.commit()
 
     def select_humidity_average(self, fk_user, sensor_name):
