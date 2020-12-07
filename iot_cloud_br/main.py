@@ -24,7 +24,7 @@ def main():
         data_in = json.loads(msg.payload.decode('utf-8'))
         try:
             user_fk = user_dao.search_id_user(data_in['usuario'])
-            novo_sensor = Sensor(data_in['nome_sensor'], data_in['temperatura'], data_in['umidade'],
+            novo_sensor = Sensor(data_in['nome_sensor'].lower(), data_in['temperatura'], data_in['umidade'],
                                  time.strftime('%Y-%m-%d'),
                                  time.strftime('%H:%M:%S'), user_fk)
             sensor_dao.insert_user_sensor(novo_sensor.sensor_name, novo_sensor.temperature, novo_sensor.humidity,
